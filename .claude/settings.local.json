@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(OUTPUT_CONFIG_SUMMARY.txt:*)",
+      "Bash(ls:*)",
+      "Bash(python3:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "WebFetch(domain:www.atlabs.ai)",
+      "WebFetch(domain:www.imagine.art)",
+      "WebFetch(domain:www.agiyes.com)",
+      "WebFetch(domain:www.glbgpt.com)",
+      "WebFetch(domain:promptomania.com)",
+      "WebFetch(domain:www.cnblogs.com)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:story321.com)",
+      "WebFetch(domain:expertbeacon.com)",
+      "WebFetch(domain:solopreneurcode.substack.com)",
+      "WebFetch(domain:budgetpixel.com)",
+      "WebFetch(domain:www.allfreeaitools.com)",
+      "WebFetch(domain:www.hkmu.edu.hk)",
+      "WebFetch(domain:sider.ai)",
+      "WebFetch(domain:chilledsites.com)",
+      "Bash(python:*)",
+      "WebFetch(domain:replicate.com)"
+    ]
+  }
+}

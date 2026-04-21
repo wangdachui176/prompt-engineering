@@ -1,0 +1,23 @@
+{
+  "skill_name": "banana-app-prompt-generator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "应用名称：日程规划宝\n一句话描述：让每一天都井井有条\n应用类型：效率工具类\n简介：帮助用户规划日程、管理任务、提升效率的智能日历应用\n\n帮我生成App图标和启动页的prompt",
+      "expected_output": "应该生成适合Nano Banana Pro的英文prompt，包含App图标和启动页两个场景的完整prompt，包含positive prompt和negative prompt",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我想做一个社交App的营销海报，App叫'夜聊'，是年轻人深夜语音聊天的社交平台，一句话描述是'深夜EMO党的树洞'。需要生成宣传海报的prompt",
+      "expected_output": "应该生成适合Nano Banana Pro的宣传海报prompt，需要从'深夜'、'语音社交'、'树洞'等关键词中提取视觉元素",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "帮我生成一个健身App的启动页prompt。App叫FitDaily，每天运动一点点。功能是记录运动、制定计划、社交打卡。",
+      "expected_output": "应该从'运动'、'每日'、'打卡'等元素中提取视觉表达，生成启动页场景的prompt",
+      "files": []
+    }
+  ]
+}
