@@ -9,7 +9,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).parent.parent
 SKILL_PATH = ROOT / ".claude" / "skills" / "lovart-api" / "agent_skill.py"
 ENV_FILE = ROOT / ".env"
 ENV_EXAMPLE = ROOT / ".env.example"

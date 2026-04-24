@@ -22,10 +22,10 @@ from pathlib import Path
 # ─── 配置区 ───────────────────────────────────────────────────────────────────
 
 # Lovart agent_skill.py 路径（相对于本文件）
-SKILL_PATH = Path(__file__).parent / ".claude" / "skills" / "lovart-api" / "agent_skill.py"
+SKILL_PATH = Path(__file__).parent.parent / ".claude" / "skills" / "lovart-api" / "agent_skill.py"
 
 # 输出根目录
-OUTPUT_ROOT = Path(__file__).parent / "output"
+OUTPUT_ROOT = Path(__file__).parent.parent / "output"
 
 # 应用名称（用于创建子目录）
 APP_NAME = "应用名称"
