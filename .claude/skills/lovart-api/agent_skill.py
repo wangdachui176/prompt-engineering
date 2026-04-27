@@ -23,6 +23,16 @@ if os.environ.get("LOVART_INSECURE_SSL") == "1":
     _ssl_ctx.check_hostname = False
     _ssl_ctx.verify_mode = ssl.CERT_NONE
 
+# Proxy support - auto-detect system proxy
+_proxy_handler = None
+http_proxy = os.environ.get("HTTP_PROXY") or os.environ.get("http_proxy")
+https_proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
+if http_proxy or https_proxy:
+    _proxy_handler = urllib.request.ProxyHandler({
+        "http": http_proxy,
+        "https": https_proxy,
+    })
+
 
 class AgentSkillError(Exception):
     def __init__(self, message: str, code: int = 0):
@@ -84,9 +94,26 @@ class AgentSkill:
             req = urllib.request.Request(url, data=data, headers=headers, method=method)
 
             try:
-                with urllib.request.urlopen(req, timeout=self.timeout, context=_ssl_ctx) as resp:
-                    result = json.loads(resp.read().decode())
-                    break
+                if _proxy_handler:
+                    opener = urllib.request.build_opener(_proxy_handler)
+                    # 注意：代理模式下SSL验证可能需要特殊处理
+                    import ssl
+                    if os.environ.get("LOVART_INSECURE_SSL") == "1":
+                        import ssl
+                        ctx = ssl.create_default_context()
+                        ctx.check_hostname = False
+                        ctx.verify_mode = ssl.CERT_NONE
+                        with opener.open(req, timeout=self.timeout) as resp:
+                            result = json.loads(resp.read().decode())
+                            break
+                    else:
+                        with opener.open(req, timeout=self.timeout) as resp:
+                            result = json.loads(resp.read().decode())
+                            break
+                else:
+                    with urllib.request.urlopen(req, timeout=self.timeout, context=_ssl_ctx) as resp:
+                        result = json.loads(resp.read().decode())
+                        break
             except urllib.error.HTTPError as e:
                 err = e.read().decode()
                 # Retry on gateway errors (404 route mismatch, 502, 503, 429)
@@ -563,6 +590,7 @@ def main():
     p = sub.add_parser("chat")
     p.add_argument("--prompt", required=True)
     p.add_argument("--project-id", default=None)
+    p.add_argument("--auto-create-project", action="store_true", help="Auto-create project if not provided")
     p.add_argument("--thread-id", default=None, help="Reuse thread for context continuity")
     p.add_argument("--attachments", nargs="*", default=None)
     p.add_argument("--json", action="store_true")
@@ -766,14 +794,17 @@ def main():
     try:
         if args.command == "chat":
             # Auto-fill project_id from local state if not provided
-            project_id = args.project_id or state.get_project_id()
+            project_id = args.project_id
+            # 如果指定了 --auto-create-project 或者没有 project_id，则自动创建
+            if args.auto_create_project or not project_id:
+                project_id = None  # 让 chat 方法自动创建
 
             prefer_models = json.loads(args.prefer_models) if args.prefer_models else None
             result = skill.chat(prompt=args.prompt, project_id=project_id,
-                                attachments=args.attachments, thread_id=args.thread_id,
-                                prefer_models=prefer_models,
-                                include_tools=args.include_tools,
-                                exclude_tools=args.exclude_tools)
+                             attachments=args.attachments, thread_id=args.thread_id,
+                             prefer_models=prefer_models,
+                             include_tools=args.include_tools,
+                             exclude_tools=args.exclude_tools)
 
             # Auto-save state
             if result.get("project_id"):

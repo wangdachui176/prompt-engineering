@@ -339,11 +339,11 @@ python3 {baseDir}/agent_skill.py chat --prompt "draw a cat" --prefer-models '{"I
 python3 {baseDir}/agent_skill.py chat --prompt "generate ocean waves" --prefer-models '{"VIDEO":["generate_video_kling_3_0"]}' --json --download
 
 # Combine image and video preferences
-python3 {baseDir}/agent_skill.py chat --prompt "create content" --prefer-models '{"IMAGE":["generate_image_seedream_3_0"],"VIDEO":["generate_video_kling_3_0"]}' --json --download
+python3 {baseDir}/agent_skill.py chat --prompt "create content" --prefer-models '{"IMAGE":["generate_image_seedream_4_0"],"VIDEO":["generate_video_kling_3_0"]}' --json --download
 ```
 
 Common tool names for `--prefer-models`:
-- **IMAGE**: `generate_image_midjourney`, `generate_image_seedream_3_0`, `generate_image_gpt_image`, `generate_image_flux_pro`, `generate_image_nano_banana`, `generate_image_nano_banana_pro`
+- **IMAGE**: `generate_image_midjourney`, `generate_image_seedream_4_0`, `generate_image_gpt_image`, `generate_image_flux_pro`, `generate_image_nano_banana`, `generate_image_nano_banana_pro`
 - **VIDEO**: `generate_video_kling_3_0`, `generate_video_wan_2_6`, `generate_video_sora_v2_pro`, `generate_video_veo3`
 
 When the user requests a specific model, prefer `--prefer-models` over putting model names in the prompt.

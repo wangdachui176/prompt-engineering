@@ -6,7 +6,7 @@ run_lovart.py — 批量生图执行脚本
   2. 将 prompt 填入下方 TASKS 列表
   3. 运行：python run_lovart.py
 
-支持的模型（MODEL 字段）：
+支持的品牌（MODEL 字段）：
   generate_image_jimeng          即梦 — 中文语义理解强，风格还原度高
   generate_image_nano_banana_pro Nano Banana Pro — 细节丰富，高质量插画
   generate_image_midjourney      Midjourney — 艺术感强，构图精致
@@ -102,7 +102,6 @@ def run_tasks():
     output_dir = OUTPUT_ROOT / APP_NAME
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    thread_id = None
     success, failed = 0, 0
 
     for i, task in enumerate(TASKS, 1):
@@ -126,8 +125,6 @@ def run_tasks():
             "--json", "--download",
             "--output-dir", str(output_dir),
         ]
-        if thread_id:
-            cmd += ["--thread-id", thread_id]
 
         result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
 
@@ -138,8 +135,6 @@ def run_tasks():
 
         try:
             data = json.loads(result.stdout)
-            if not thread_id and data.get("thread_id"):
-                thread_id = data["thread_id"]
             downloaded = data.get("downloaded", [])
             if downloaded:
                 for dl in downloaded:
