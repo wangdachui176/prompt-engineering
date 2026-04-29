@@ -95,21 +95,11 @@ class AgentSkill:
 
             try:
                 if _proxy_handler:
-                    opener = urllib.request.build_opener(_proxy_handler)
-                    # 注意：代理模式下SSL验证可能需要特殊处理
-                    import ssl
-                    if os.environ.get("LOVART_INSECURE_SSL") == "1":
-                        import ssl
-                        ctx = ssl.create_default_context()
-                        ctx.check_hostname = False
-                        ctx.verify_mode = ssl.CERT_NONE
-                        with opener.open(req, timeout=self.timeout) as resp:
-                            result = json.loads(resp.read().decode())
-                            break
-                    else:
-                        with opener.open(req, timeout=self.timeout) as resp:
-                            result = json.loads(resp.read().decode())
-                            break
+                    https_handler = urllib.request.HTTPSHandler(context=_ssl_ctx)
+                    opener = urllib.request.build_opener(_proxy_handler, https_handler)
+                    with opener.open(req, timeout=self.timeout) as resp:
+                        result = json.loads(resp.read().decode())
+                        break
                 else:
                     with urllib.request.urlopen(req, timeout=self.timeout, context=_ssl_ctx) as resp:
                         result = json.loads(resp.read().decode())

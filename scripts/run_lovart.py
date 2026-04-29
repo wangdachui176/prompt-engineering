@@ -38,16 +38,6 @@ APP_NAME = "应用名称"
 
 TASKS = [
     # {
-    #     "label": "App图标-即梦",
-    #     "prompt": "在此粘贴即梦版本 prompt",
-    #     "model": "generate_image_jimeng",
-    # },
-    # {
-    #     "label": "App图标-Banana",
-    #     "prompt": "在此粘贴 Banana 版本 prompt",
-    #     "model": "generate_image_nano_banana_pro",
-    # },
-    # {
     #     "label": "启动页-即梦",
     #     "prompt": "在此粘贴即梦版本 prompt",
     #     "model": "generate_image_jimeng",
@@ -64,16 +54,6 @@ TASKS = [
     # },
     # {
     #     "label": "宣传海报-Banana",
-    #     "prompt": "在此粘贴 Banana 版本 prompt",
-    #     "model": "generate_image_nano_banana_pro",
-    # },
-    # {
-    #     "label": "功能介绍图-即梦",
-    #     "prompt": "在此粘贴即梦版本 prompt",
-    #     "model": "generate_image_jimeng",
-    # },
-    # {
-    #     "label": "功能介绍图-Banana",
     #     "prompt": "在此粘贴 Banana 版本 prompt",
     #     "model": "generate_image_nano_banana_pro",
     # },
@@ -107,7 +87,7 @@ def run_tasks():
     for i, task in enumerate(TASKS, 1):
         label = task.get("label", f"任务{i}")
         prompt = task.get("prompt", "").strip()
-        model = task.get("model", "generate_image_jimeng")
+        model = task.get("model", "generate_image_nano_banana_pro")
 
         if not prompt:
             print(f"\n⚠️  [{label}] prompt 为空，跳过")
